@@ -1,0 +1,21 @@
+{
+"manifest_version": 3,
+"name": "Auto AnimeList",
+"version": "0.1",
+"permissions": ["storage", "identity"],
+"host_permissions": [
+  "https://api.myanimelist.net/*",
+  "https://myanimelist.net/*"
+],
+"background": {
+  "service_worker": "background.js"
+},
+"content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["content.js"]
+}],
+
+"action": {
+  "default_popup": "popup.html"
+}
+}
