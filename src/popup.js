@@ -1,11 +1,12 @@
 document.getElementById("login-btn").addEventListener("click", function () {
-      console.log("bouton cliqué !");
-    const verifier = generateCodeVerifier();
-    chrome.storage.local.set({ code_verifier: verifier })
-    generateCodeChallenge(verifier).then((challenge) => {
-  chrome.tabs.create({ url: buildAuthUrl(challenge) })
-});
-
+  console.log("bouton cliqué !");
+  const verifier = generateCodeVerifier();
+  generateCodeChallenge(verifier).then((challenge) => {
+    chrome.storage.local.set({
+      code_verifier: verifier,
+    });
+    chrome.tabs.create({ url: buildAuthUrl(challenge) });
+  });
 });
 
 function generateCodeVerifier() {
@@ -34,11 +35,12 @@ async function generateCodeChallenge(verifier) {
 
 function buildAuthUrl(challenge) {
   const url =
-    "https://myanimelist.net/v1/oauth2/authorize?response_type=code"+
-    "&client_id="+CLIENT_ID+
-    "&redirect_uri=https://myanimelist.net"+
-    "&code_challenge="+
-    challenge+
+    "https://myanimelist.net/v1/oauth2/authorize?response_type=code" +
+    "&client_id=" +
+    CLIENT_ID +
+    "&redirect_uri=https://myanimelist.net" +
+    "&code_challenge=" +
+    challenge +
     "&code_challenge_method=S256";
   return url;
 }
